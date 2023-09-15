@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block title %}Progressibility{% endblock %}</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/DarkyFramework.core.css' %}?{% now 'U' %}">
+	{% block extraheaders %}<style type="text/css"></style>{% endblock %}
+</head>
+<body>
+	{% block navbar %}
+		<div class="navbar-basic">
+			<ul>
+				<li><a href="{% url 'users:login' %}" class="nlogo"><img src="/static/img/navbar-logo.png" id="profile-btn"></a></li>
+				<li><a href="{% url 'guidelines' %}">Guidelines</a></li>
+				<li><a href="{% url 'about' %}">About</a></li>
+			</ul>
+		</div>
+	{% endblock %}
+	{% block extracontenttop %}<p style="display: none;">You aren't supposed to see this :X</p>{% endblock %}
+	<table>
+		<tr>
+			<td>
+				<div class="tile-invisible">
+					{% block pageleft %}{% endblock %}
+				</div>
+			</td>
+			<td style="padding-left: 200px;">
+				<div class="tile">
+					{% block pageright %}{% endblock %}
+				</div>
+			</td>
+		</tr>
+	</table>
+	{% block extracontent %}<p style="display: none;">You aren't supposed to see this :X</p>{% endblock %}
+	<p style="font-size: 13px;">Icons by <a href="https://icons8.com/" id="fp" style="color: #BB86FC;" target="_blank">Icons8</a>. Graphs powered by <a href="https://plotly.com/javascript/" id="fp" style="color: #BB86FC;" target="_blank">PlotlyJS</a></p>
+</body>
+</html>

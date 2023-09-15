@@ -1,0 +1,30 @@
+.form-basic {
+	display: block;
+}
+
+form input {
+	vertical-align: top;
+}
+
+form li {
+	list-style: none;
+	padding: 10px;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.form-input {
+	background: #1F1B24;
+    outline: 0;
+    border-width: 0 0 2px;
+    font-size: 13px;
+    width: 250px;
+    transition: all 0.3s ease 0s;
+    color: white;
+    font-weight: bold;
+}
+
+.form-input:focus {
+	border-color: #BB86FC;
+	width: 250px;
+}

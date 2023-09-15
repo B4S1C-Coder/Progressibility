@@ -1,0 +1,16 @@
+{% extends "forms_base.html" %}
+{% block title %}Progressibility - Login{% endblock %}
+{% block pageleft %}
+	<a href="javascript:void(0)" style="cursor: default; font-size: 72px;" class="logo">Progressibility</a>
+	<p>Progress Made Simple:<br>Progressibility - Your Personal Growth Companion!</p>
+{% endblock %}
+{% block pageright %}
+	<form class="form-basic" autocomplete="off" method="POST">
+		{% csrf_token %}
+		{{ login_form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Sign In</button>
+	</form>
+	<a href="{% url 'unavailable' %}" id="fp">Forgotten password?</a>
+	<br>
+	<a href="{% url 'users:register' %}" id="fp">Create New Account</a>
+{% endblock %}

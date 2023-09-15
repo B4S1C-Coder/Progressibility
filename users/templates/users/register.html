@@ -1,0 +1,23 @@
+{% extends "forms_base.html" %}
+{% block title %}Progressibility - Register{% endblock %}
+{% block pageleft %}
+	<h1>Welcome to <a href="javascript:void(0)" style="cursor: default;" class="logo">Progressibility</a></h1>
+	<p>Progress Made Simple: Progressibility - Your Personal Growth Companion!</p>
+{% endblock %}
+{% block pageright %}
+	<form autocomplete="off" method="POST">
+		{% csrf_token %}
+		{{ register_form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Register</button>
+	</form>
+	<p style="font-size: 13px;">Already have an account? - <a href="{% url 'users:login' %}" id="fp">Log In Instead</a></p>
+{% endblock %}
+{% block extracontent %}
+	{% if form.errors %}
+  		<ul>
+    		{% for key,value in form.errors.items %} 
+      			<li>{{ key|escape }} : {{ value|escape }}</li>
+    		{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

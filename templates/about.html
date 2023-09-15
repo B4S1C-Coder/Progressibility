@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}About Progressibility{% endblock %}
+{% block extraheaders %}
+<style type="text/css">
+	a {
+		color: #BB86FC;
+	}
+
+	h2 {
+		text-align: left;
+	}
+
+	p {
+		text-align: left;
+	}
+</style>
+{% endblock %}
+{% block content %}
+	<h1>About this project</h1>
+	<p>Progressibility is a simple web app that allows you to keep tracks of your tasks and deadlines through it's to-do list feature. It also has a trends feature which allows you to visualise any data through line graphs, trends is best suited for time series data but feel free to be creative. ;)</p>
+
+	<h2>What's the goal of this project?</h2>
+	<p>The goal of this project was to learn the <a href="https://www.djangoproject.com/">Django Framework</a> and learn more about backend web development. In my school, I made a project called "Progress" which used the <a href="https://flask.palletsprojects.com/">Flask Framework</a>. It had similar capabilities (but was a lot worse than this project, since I had just started to learn to code). This project is more like a successor to that project.</p>
+
+	<h2>Why does the website look so bad? Why is only desktop supported?</h2>
+	<p>Apologies for the design, as of making this project I have only relied on my knowledge of HTML, CSS AND JS (DOM). I do plan to learn a frontend framework as well. As of now, this project uses CSS and JS written by me (ofc plotlyJS and some DOM functions, I have referred as well).</p>
+
+	<h2>Does this project have any scope of expansion?</h2>
+	<p>Yes, it can be expanded into a data visualisation tool, esssentially a dashboard that can visualise large amounts of data. Machine Learning and Artifical Intelligence can also be integrated to also analyse and make useful predictions on the data.</p>
+
+	<h2>Will it be expanded?</h2>
+	<p>Who knows? Maybe.</p>
+{% endblock %}

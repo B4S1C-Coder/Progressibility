@@ -1,0 +1,35 @@
+{% extends "forms_base.html" %}
+{% block title %}Update Trend{% endblock %}
+{% block pageleft %}
+	<h1>Add a <a href="javascript:void(0)" style="cursor: default;" class="logo">Trend</a></h1>
+	<ul style="text-align: left;">
+		<li>Trend Name can have 100 characters at most.</li>
+		<li>Ensure the practicality of your trend.</li>
+		<li>As of now trends only support line charts.</li>
+		<li>Look at the below example for the keys you can use in Trends JSON.</li>
+		<li>Please ensure our <a id="fp" href="{% url 'guidelines' %}">Community Guidelines</a> are not violated.</li>
+	</ul>
+{% endblock %}
+{% block pageright %}
+	<form class="form-basic" method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Update</button>
+	</form>
+	<a class="link-btn-filled-div" href="{% url 'progress_tracker:dashboard' %}">Cancel</a>
+{% endblock %}
+{% block extracontent %}
+<pre>
+	<code>
+		{
+			"progressibility.trends.maths": [98,99,100],
+			"progressibility.trends.physics": [99,99,100],
+			"progressibility.trends.chemistry": [90,91,100],
+			"progressibility.title": "Test Performance Analysis",
+			"progressibility.xaxis": ["12/03/2023","14/03/2023","16/03/2023"],
+			"progressibility.yaxis.title": "Marks in Subject",
+			"progressibility.xaxis.title": "Date"
+		}
+	</code>
+</pre>
+{% endblock %}

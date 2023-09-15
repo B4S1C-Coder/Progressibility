@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Welcome to Progressibility!{% endblock %}
+{% block navbar %}{% endblock %}
+{% block content %}
+	<h1>Welcome to<br><a href="javascript:void(0)" style="cursor: default; font-size: 72px;" class="logo">Progressibility</a></h1>
+	<p>Thank you for visiting Progressibility! At the moment, Progressibility is only supported for desktop.<br>You can still continue to Progressibility but the styling is meant for desktop.</p>
+	<a href="{% url 'users:login' %}" class="link-btn-filled">Continue</a>
+{% endblock %}

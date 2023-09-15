@@ -1,0 +1,69 @@
+.tile {
+	margin: 50px;
+	margin-top: 90px;
+	margin-bottom: 90px;
+	color: #AEAEAF;
+	border-radius: 25px;
+	background-color: #1F1B24;
+	padding: 16px;
+	box-shadow: 0 4px 8px 0 rgba(187, 134, 252, 0.2), 0 6px 20px 0 rgba(187, 134, 252, 0.19);
+	flex: 1 0 50%;
+}
+
+.tile h1, h2, h3, h4, h5, h6 {
+	padding: 16px;
+}
+
+.tile-invisible {
+	margin: 50px;
+	margin-top: 90px;
+	margin-bottom: 90px;
+	color: #AEAEAF;
+	border-radius: 25px;
+/*	background-color: #1F1B24;*/
+	padding: 16px;
+	box-shadow: 0 4px 8px 0 rgba(187, 134, 252, 0.2), 0 6px 20px 0 rgba(187, 134, 252, 0.19);
+}
+
+.tile-invisible h1, h2, h3, h4, h5, h6 {
+	padding: 16px;
+}
+
+.row {
+/*	display: inline-block;*/
+/*	padding: 32px 32px 32px 32px;*/
+/*	margin: 32px;*/
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.row a, img {
+	padding: 0px 18px 0px 18px;
+}
+
+.tile-fire {
+	margin: 0px;
+	color: #121212;
+	width: 100%;
+	left: 0;
+	margin-top: 90px;
+	margin-bottom: 90px;
+	position: absolute;
+	background: #FF512F;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #F09819, #FF512F);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #F09819, #FF512F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	/*padding: 16px;*/
+	/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+}
+
+.tile-fire h1 {
+	font-size: 50px;
+}
+
+.tile-fire h1, h2, h3, h4, h5, h6 {
+	padding: 16px;
+}
+
+.tile-fire p {
+	font-weight: bold;
+}

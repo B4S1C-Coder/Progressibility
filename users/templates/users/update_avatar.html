@@ -1,0 +1,18 @@
+{% extends "forms_base.html" %}
+{% block title %}Update your Avatar{% endblock %}
+{% block pageleft %}
+	<h1>Update your <a href="javascript:void(0)" style="cursor: default;" class="logo">Avatar</a></h1>
+	<ul style="text-align: left;">
+		<li>The recommended size is 48 x 48 pixels.</li>
+		<li>Please ensure that your avatar is not offensive.</li>
+		<li>Please ensure our <a id="fp" href="{% url 'guidelines' %}">Community Guidelines</a> are not violated.</li>
+	</ul>
+{% endblock %}
+{% block pageright %}
+	<form class="form-basic" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button class="link-btn-filled-div" type="submit">Update</button>
+	</form>
+	<a class="link-btn-filled-div" href="{% url 'progress_tracker:dashboard' %}">Cancel</a>	
+{% endblock %}

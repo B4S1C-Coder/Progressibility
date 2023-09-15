@@ -1,0 +1,72 @@
+/*This is a link that has been made to look like a button*/
+.link-btn {
+	background-color: #121212;
+	border: solid;
+	border-color: #BB86FC;
+	color: #BB86FC;
+	font-weight: bold;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border: solid;
+	transition: all 0.3s ease 0s;
+}
+
+.link-btn:hover {
+	background-color: #BB86FC;
+	color: black;
+	border: solid;
+	border-color: #BB86FC;
+}
+
+.link-btn-filled {
+	background-color: #BB86FC;
+	border: solid;
+	border-color: #BB86FC;
+	color: black;
+	font-weight: bold;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	/*border: solid;*/
+	transition: all 0.3s ease 0s;
+}
+
+.link-btn-filled:hover {
+	background-color: #121212;
+	color: #BB86FC;
+	border: solid;
+	border-color: #BB86FC;
+}
+
+.link-btn-filled-div {
+	background-color: #BB86FC;
+	border: solid;
+	border-color: #BB86FC;
+	color: #1F1B24;
+	font-weight: bold;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	/*border: solid;*/
+	transition: all 0.3s ease 0s;
+}
+
+.link-btn-filled-div:hover {
+	background-color: #1F1B24;
+	color: #BB86FC;
+	border: solid;
+	border-color: #BB86FC;
+}

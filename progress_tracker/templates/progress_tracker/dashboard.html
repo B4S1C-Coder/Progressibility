@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}Progressibility - Dashboard{% endblock %}
+{% block extraheaders %}
+<style type="text/css">
+#user-info-panel-container {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	display: none;
+	backdrop-filter: blur(5px);
+}
+.empty-div {
+	opacity: 0;
+}
+
+/*#col_delete {
+	visibility: collapse;
+	cursor: default;
+	pointer-events: none;
+}*/
+
+#big-done-icon:hover {
+	content: url('/static/img/edit-icon-48-hover.png');
+}
+
+td {
+	padding: 10px;
+	border-color: #bb86fc;
+	border: solid;
+	border-width: 1px;
+}
+
+.edit_btn_cols {
+	display: none;
+}
+</style>
+{% endblock %}
+{% block navbar %}
+	<div class="navbar-basic">
+		<ul>
+			<li><a href="javascript:void(0)" style="cursor:default;" class="nlogo"><img src="{{ imgurl }}" id="profile-btn"></a></li>
+			<li><a href="javascript:void(0)" style="cursor:default;">{{ firstname }} {{ lastname }}</a></li>
+			<li style="margin-left: 25%;"><a href="javascript:void(0)" style="cursor:default; font-size: 20px;" class="logo" id="centerlogo">Progressibility</a></li>
+		</ul>
+	</div>
+{% endblock %}
+{% block content %}
+	<script type="text/javascript">
+		// cursed javascript
+		var isVisible = false;
+		var userInfoPanel;
+		var userInfoPanelContainer;
+		var parentDiv;
+		var grandParentDiv;
+
+		window.onload = function () {
+			userInfoPanel = document.getElementById('user-info-panel');
+			userInfoPanelContainer = document.getElementById('user-info-panel-container');
+		};
+
+		document.addEventListener("click",function(e) {
+			parentDiv = e.target;
+			grandParentDiv = e.target;
+
+			try {
+				parentDiv = e.target.parentNode;
+				grandParentDiv = e.target.parentNode.parentNode;
+			} catch (error) {}
+
+			var forbiddenIds = ['user-info-panel', 'panel-glass', 'panel-element', parentDiv.id.toString(), grandParentDiv.id.toString()];
+			
+			if (isVisible == true) {
+
+				if ((!forbiddenIds.includes(e.target.id)) || (e.target.id == '')) {
+					// the user clicked somewhere else on the screen, so now
+					// we hide the user info panel.
+					userInfoPanel.style.display = "none";
+					userInfoPanelContainer.style.display = "none";
+					isVisible = false;
+				}
+			}
+			if (isVisible == false) {
+
+				if (e.target.id === "profile-btn") {
+					// the user has clicked on the profile pic
+					// so now we show the user info panel.
+					userInfoPanel.style.display = "block";
+					userInfoPanelContainer.style.display = "block";
+					isVisible = true;
+				}
+			}
+		});
+	</script>
+	<div id="user-info-panel-container">
+		<div class="tile t1" id="user-info-panel" style="width: 500px; left: 0; right: 0; margin: 0 auto; margin-top: 20px;">
+			<div class="tile-invisible" id="panel-glass" style="background: rgba(31, 27, 36, 0.3); margin: 0 0 1px 0;border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding-bottom: 0;">
+				<h1 style="margin-bottom: 0;" id='panel-element'>{{ firstname }} {{ lastname }}</h1>
+			</div>
+			<div class="tile-invisible" id="panel-glass" style="border-radius: 0; background: rgba(31, 27, 36, 0.3); margin: 0 0 1px 0;">
+				<img src="{{ imgurl }}" id='panel-element'>
+				<p style="margin-top: 0;" id='panel-element'>{{ username }}
+					<br>{{ email }}
+				</p>
+			</div>
+			<div class="tile-invisible" id="panel-glass" style="text-align: left; border-radius: 0; background: rgba(31, 27, 36, 1.0); margin: 0 0 1px 0;">
+				<p style="font-weight:bold;" id='panel-element'>Joined</p>
+				<p style="margin-top: 0;" id='panel-element'>You joined Progressibility on {{ datejoin }}.</p>
+				<p style="font-weight: bold;" id='panel-element'>About</p>
+				<p style="margin-top: 0;" id='panel-element'>{{ bio }}</p>
+			</div>
+			<div class="tile-invisible" id="panel-glass" style="text-align: left; border-top-left-radius: 0; border-top-right-radius: 0; background: rgba(31, 27, 36, 1.0); margin: 0 0 1px 0;">
+				<p style="font-weight: bold;" id='panel-element'>Settings</p>
+				<a href="{% url 'users:updateavatar' %}" id="fp-2">Update Avatar</a>
+				<br>
+				<a href="{% url 'users:updatebio' %}" id="fp-2">Update Bio</a>
+				<br>
+				<a href="{% url 'users:logout' %}" id="fp-2">Logout</a>
+			</div>
+		</div>
+		<div class="empty-div">p</div>
+		<div class="empty-div">p</div>
+	</div>
+	<div style="text-align:left;">
+		<h1>Hello, {{ firstname }}</h1>
+	</div>
+	<div class="tile">
+		<h1>Your Tasks</h1>
+		<table style="margin: 0px auto;" class="tasks-table">
+			<tr>
+				<td style="font-weight: bold;">S.No.</td>
+				<td style="font-weight: bold;">Task</td>
+				<td style="font-weight: bold;">Added</td>
+				<td style="font-weight: bold;">Deadline</td>
+				<!-- <td style="font-weight: bold;">Status</td> -->
+			</tr>
+			{% for task in usertasks %}
+				<tr>
+					<!-- <td>{{ forloop.counter }}</td> -->
+					<!-- /static/img/so on IS ONLY FOR DEVELOPMENT. IN PRODUCTION STATIC FILES
+					WILL IDEALLY BE ON A SEPARATE URL! -->
+					{% if task.completed %}
+						<td style="color: green;">{{ forloop.counter }}</td>
+						<td style="border-color: green;" title="{{ task.content }}"><s>{{ task.content|truncatechars:40 }}</s></td>
+						<td style="border-color: green;"><s>{{ task.dateadded|date:"d/m/Y"}}</s></td>
+						<td style="border-color: green;"><s>{{ task.deadline|date:"d/m/Y" }}</s></td>
+						<td style="background: #1F1B24; border-style: none;" title="completed"><a href="{% url 'progress_tracker:altertask' taskid=task.id %}"><img src="/static/img/undo-icon-48.png" class="undo-icon" title="completed"></a></td>
+					{% else %}
+						<td style="color: red;">{{ forloop.counter }}</td>
+						<td style="border-color: red;" title="{{ task.content }}">{{ task.content|truncatechars:40 }}</td>
+						<td style="border-color: red;">{{ task.dateadded|date:"d/m/Y"}}</td>
+						<td style="border-color: red;">{{ task.deadline|date:"d/m/Y" }}</td>
+						<td style="background: #1F1B24; border-style: none;" title="pending"><a href="{% url 'progress_tracker:altertask' taskid=task.id %}"><img src="/static/img/done-icon-48.png" class="done-icon" title="pending"></a></td>
+					{% endif %}
+					<td style="background: #1F1B24; border-style: none;" class="edit_btn_cols"><a href="{% url 'progress_tracker:updatetask' taskid=task.id %}"><img src="/static/img/edit-icon-48.png" class="update-icon"></a></td>
+					<td style="background: #1F1B24; border-style: none;" class="edit_btn_cols"><a href="{% url 'progress_tracker:deletetask' taskid=task.id %}"><img src="/static/img/delete-icon-48.png" class="delete-icon"></a></td>
+				</tr>
+			{% endfor %}
+		</table>
+		<script type="text/javascript" defer>
+			var areEditIconsVisible = false;
+			var editIcons = document.getElementsByClassName("edit_btn_cols");
+
+			console.log(editIcons);
+
+			// Confusingly frustrating JavaScript: The approach for showing and hiding
+			// profile window does NOT work here for some reason.
+			function toggleEditIcons() {
+				const elements = document.querySelectorAll('.edit_btn_cols');
+
+				elements.forEach(element => {
+					if (window.getComputedStyle(element).display === 'none') {
+						element.style.display = 'inline-block';
+					} else {
+						element.style.display = 'none';
+					}
+				});
+}
+
+		</script>
+		<a href="{% url 'progress_tracker:addtask' %}"><img src="/static/img/add-icon-48.png" class="add-icon"></a>
+		<a href="javascript:void(0)" onclick="toggleEditIcons();"><img src="/static/img/edit-icon-48.png" id="big-done-icon" title="Show edit buttons"></a>
+	</div>
+	<div class="tile">
+		<h1>Your Trends</h1>
+		<table style="margin: 0px auto;" class="tasks-table">
+			<tr>
+				<td style="font-weight: bold;">S.No.</td>
+				<td style="font-weight: bold;">Trend</td>
+				<td style="font-weight: bold;">Added</td>
+			</tr>
+			{% for trend in usertrends %}
+				<!-- <tr style="position: relative;"> -->
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ trend.trend_name }}</td>
+					<td>{{ trend.dateadded|date:"d/m/Y" }}</td>
+					<td style="background: #1F1B24; border-style: none;"><a href="{% url 'progress_tracker:detailtrend' trendid=trend.id %}"><img src="/static/img/gotos-icon-48.png" class="goto-icon"></a></td>
+					<td style="background: #1F1B24; border-style: none;" class="edit_btn_cols"><a href="{% url 'progress_tracker:updatetrendraw' trendid=trend.id %}"><img src="/static/img/edit-icon-48.png" class="update-icon"></a></td>
+					<td style="background: #1F1B24; border-style: none;" class="edit_btn_cols"><a href="{% url 'progress_tracker:deletetrend' trendid=trend.id %}"><img src="/static/img/delete-icon-48.png" class="delete-icon"></a></td>
+				</tr>
+			{% endfor %}
+		</table>
+		<a href="{% url 'progress_tracker:addtrendraw' %}"><img src="/static/img/add-icon-48.png" class="add-icon"></a>
+		<a href="javascript:void(0)" onclick="toggleEditIcons();"><img src="/static/img/edit-icon-48.png" id="big-done-icon" title="Show edit buttons"></a>
+	</div>
+{% endblock %}

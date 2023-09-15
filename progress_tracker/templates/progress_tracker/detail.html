@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}{{ trendname }} - Deatil{% endblock %}
+{% block extraheaders %}
+<script type="text/javascript" src="/static/vendor/plotly-2.24.1.min.js"></script>
+<style type="text/css">
+#graph-ext {
+    align-items: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+#asso-json {
+	width: 50%;
+	align-items: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#about-container {
+	width: 50%;
+	align-items: center;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 0;
+    display: inline-block;
+/*    justify-content: center;*/
+    text-align: center;
+}
+
+.link-btn-filled-div:hover {
+	background: #121212;
+}
+
+.back-btn-container {
+	text-align: left;
+	position: fixed;
+	padding-top: 50px;
+}
+</style>
+{% endblock %}
+{% block content %}
+	<div class="back-btn-container">
+		<a href="{% url 'progress_tracker:dashboard' %}" class="link-btn-filled-div">Back</a>
+	</div>
+	<div id="graph-ext"><div id="graph"></div></div>
+	<div id="about-container"></div>
+	{{ trendattrs|json_script:"trend-data" }}
+	<script type="text/javascript">
+		// cursed javascript
+		const trendData = JSON.parse(document.getElementById('trend-data').textContent);
+		var graphData = [];
+		var thingsBeingTracked = [];
+		// var layout = {xaxis: {}, yaxis: {}};
+
+		function makeLayout(ttitle, xtitle, ytitle) {
+			var layout = {
+				title: ttitle,
+				titlefont: {
+					color: "white"
+				},
+				plot_bgcolor: "#121212",
+				paper_bgcolor: "#121212",
+				xanchor: "center",
+				xaxis: {
+					title: xtitle,
+                	tickcolor: "white",
+                	linecolor: "white",
+                	gridcolor: "grey",
+                	tickfont: {
+                    	color: "white"
+                	},
+                	titlefont: {
+                    	color: "white"
+                	}
+            	},
+            	yaxis: {
+					title: ytitle,
+                	tickcolor: "white",
+                	linecolor: "white",
+                	gridcolor: "grey",
+                	tickfont: {
+                    	color: "white"
+                	},
+                	titlefont: {
+                    	color: "white"
+                	}
+            	},
+            	legend: {
+            		font: {
+            			color: "white"
+            		}
+            	}
+			};
+			return layout;
+		}
+
+		function makePlotData(xarray, yarray, tname) {
+			var plotdata = {
+				x: xarray,
+				y: yarray,
+				name: tname,
+				hoverlable: {
+					font: {
+						color: "white"
+					}
+				}
+			};
+			return plotdata;
+		}
+
+		// we assume that the following keys exist and that their existence
+		// is guranteed by the backend (specifically by the Database ORM)
+		const layout = makeLayout(trendData["progressibility.title"],
+							trendData["progressibility.xaxis.title"],
+							trendData["progressibility.yaxis.title"]);
+
+		const xArray = trendData["progressibility.xaxis"];
+
+		// after the removal of the above keys, we assume that the rest of
+		// the keys are either the yaxis data for the things tracked in this "trend"
+		// OR they are the things that the user wants to display on the webpage
+		// each key of the format "progressibility.trends.thing" corresponds to the
+		// yaxis data of "thing" which is being tracked in this "trend"
+
+		// for all other tags, div (class tile) will be created. Key will be the h1 tag
+		// and the value will go in p tags.
+		delete trendData["progressibility.title"];
+		delete trendData["progressibility.xaxis.title"];
+		delete trendData["progressibility.yaxis.title"];
+		delete trendData["progressibility.xaxis"];
+		
+		// extracting the data for the things being tracked and generating
+		// thier plot data
+		for (var key in trendData) {
+			const key_tokens = key.split(".");
+
+			if ((key_tokens[0] == "progressibility")&&(key_tokens[1] == "trends")) {
+
+				// the key is of the format progressibility.trends.thing
+				thingsBeingTracked.push(key_tokens[2]);
+				graphData.push(makePlotData(xArray, trendData[key], key_tokens[2]));
+				continue;
+			} else {
+
+				if ((key_tokens[0] == "progressibility")) {
+					// ignore these keys as they are for internal use only
+
+					if (key_tokens[1] == "trend_validator") {
+						continue;
+					}
+
+					if (key_tokens[1] == "xaxis_field") {
+						continue;
+					}
+				}
+
+				// any other user defined key
+				var elemdiv = document.createElement("div");
+				elemdiv.className = "tile";
+				elemdiv.id = key;
+				document.getElementById("about-container").appendChild(elemdiv);
+
+				var heading = document.createElement("h1");
+				heading.innerHTML = key;
+
+				var content = document.createElement("p");
+				content.innerHTML = trendData[key];
+
+				elemdiv.appendChild(heading);
+				elemdiv.appendChild(content);
+				continue;
+			}
+		}
+		canvas = document.getElementById("graph");
+		Plotly.newPlot(canvas, graphData, layout);
+	</script>
+	<p>Associated JSON</p>
+	<div id="asso-json"><code>{{ trendattrs }}</code></div>
+{% endblock %}

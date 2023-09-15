@@ -1,0 +1,37 @@
+[  DONE  ] try to display user avatar on logincheck page, also make a template for logincheck page
+[  DONE  ] find a way to access the model ProgressibilityUserProfile in progress_tracker app
+[  DONE  ] implement a dashboard view in progress_tracker
+[  DONE  ] add a bio field for user model and requisite forms to update the same
+[  DONE  ] make a new barebones extremely light css framework (preferable css only) 
+					& integrate it (DarkyFramework CSS)
+[  DONE  ] implement a basic navbar in the dashboard view
+[  DONE  ] add styling for forms (DarkyFramework.forms.css -- NO, It was better to have one large
+					css file than several smaller ones, django also caches CSS so its easier to
+					add a timestamp to one css file then multiple smaller ones)
+[  DONE  ] find a way to stop image duplication when uploading user avatar
+[  DONE  ] implement a basic task tracker
+[SUB-TASK] [  DONE  ] implement a task model (attrs: task name, deadline (date), task content, 
+					user onetoonefield)
+[  DONE  ] Fix the errors associated whilst adding a task (FIRST: run makemigrations and migrate)
+[  DONE  ] Migrate database from SQLite to MySQL
+[  DONE  ] implement a basic marks tracker
+[SUB-TASK] [  DONE  ] plot interactive graph using JS
+[SUB-TASK] [  DONE  ] ability add as many no of trackers per trend
+[SUB-TASK] [  DONE  ] appropriate models for the same
+[SUB-TASK] [  DONE  ] appropriate forms for the same
+[SUB-TASK] [  DONE  ] appropriate views for the same
+[SUB-TASK] [  DONE  ] appropriate templates for the same
+[SUB-TASK] [  DONE  ] document.createElement is not working in detail.html fix it
+[SUB-TASK] [  DONE  ] make the user friendly trends form look like the rest of the forms
+[SUB-TASK] [  DONE  ] write validations to form in views.py and thier addtion to the database
+[SUB-TASK] [  DONE  ] add a checkbox with name "Plot" in addtrend.html form when clicked this will
+					add a key "plot_filedName" mapped to "on" in request.POST, using this we can
+					determine which fields to plot
+[SUB-TASK] [  DONE  ] make the trend update form similar to addtrend.html
+[SUB-TASK] [  DONE  ] generate the pre-filled form on client side using JS, the data regarding the
+					trend is stored in trend.trends, this can be used to generate the pre-filled form
+[  BUGS  ] [ RESLVD ] when adding a task deadline of the past can also be added ensure that 
+					deadlines can only be of the present day or the future
+[  DONE  ] add errors to forms, so that in case of invalid input, the errors are displayed below each
+					field OR an error message displayed appropriately
+[NOT-DONE] write tests
